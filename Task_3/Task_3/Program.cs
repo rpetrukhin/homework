@@ -6,10 +6,23 @@ using System.Threading.Tasks;
 
 namespace Task_3
 {
+    public enum Choice
+    {
+        Sum,
+        Min,
+        Max
+    }
+
+    public enum OrderOfSort
+    {
+        Increasing,
+        Decreasing
+    }
+
     public class NthRoot
     {
-        public double init;
-        public double eps;
+        private double init;
+        private double eps;
 
         public NthRoot(double init, double eps)
         {
@@ -17,14 +30,14 @@ namespace Task_3
             this.eps = eps;
         }
 
-        public double Pow(double x, int n)
+        private double Pow(double x, uint n)
         {
             for (int i = 1; i < n; i++)
                 x *= x;
             return x;
         }
 
-        public double NewtonMethod(double number, int n)
+        public double NewtonMethod(double number, uint n)
         {
             double x;
             double y = init;
@@ -36,17 +49,54 @@ namespace Task_3
             return y;
         }
 
-        public void Test()
+        public void Test(double number, uint n)
         {
-            Console.WriteLine("Newton's method = " + NewtonMethod(8.0, 3));
-            Console.WriteLine("Math.Pow method = " + Math.Pow(8.0, 1.0 / 3.0));
+            Console.WriteLine("Newton's method = " + NewtonMethod(number, n));
+            Console.WriteLine("Math.Pow method = " + Math.Pow(number, 1.0 / n));
         }
     }
 
     public class BubbleSort
     {
-        public int[,] Sort(int[,] matrix, int n, int m, string choice, string orderOfSort)
+        private int[] RowsSum(int[,] matrix)
         {
+            int[] rows = new int[matrix.GetLength(0)];
+            for (int i = 0; i < matrix.GetLength(0); i++)
+                for (int j = 0; j < matrix.GetLength(1); j++)
+                    rows[i] += matrix[i, j];
+            return rows;
+        }
+
+        private int[] RowsMax(int[,] matrix)
+        {
+            int[] rows = new int[matrix.GetLength(0)];
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            {
+                rows[i] = matrix[i, 0];
+                for (int j = 0; j < matrix.GetLength(1); j++)
+                    if (matrix[i, j] > rows[i])
+                        rows[i] = matrix[i, j];
+            }
+            return rows;
+        }
+
+        private int[] RowsMin(int[,] matrix)
+        {
+            int[] rows = new int[matrix.GetLength(0)];
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            {
+                rows[i] = matrix[i, 0];
+                for (int j = 0; j < matrix.GetLength(1); j++)
+                    if (matrix[i, j] > rows[i])
+                        rows[i] = matrix[i, j];
+            }
+            return rows;
+        }
+
+        public int[,] Sort(int[,] matrix, Choice choice, OrderOfSort orderOfSort)
+        {
+            int n = matrix.GetLength(0);
+            int m = matrix.GetLength(1);
 
             int[] rows = new int[n];
             int[] index = new int[n];
@@ -56,34 +106,20 @@ namespace Task_3
 
             switch(choice)
             {
-                case "sum":
-                    for (int i = 0; i < n; i++)
-                        for (int j = 0; j < m; j++)
-                            rows[i] += matrix[i, j];
+                case Choice.Sum:
+                    rows = RowsSum(matrix);
                     break;
-                case "max":
-                    for (int i = 0; i < n; i++)
-                    {
-                        rows[i] = matrix[i, 0];
-                        for (int j = 0; j < m; j++)
-                            if (matrix[i, j] > rows[i])
-                                rows[i] = matrix[i, j];
-                    }
+                case Choice.Max:
+                    rows = RowsMax(matrix);
                     break;
-                case "min":
-                    for (int i = 0; i < n; i++)
-                    {
-                        rows[i] = matrix[i, 0];
-                        for (int j = 0; j < m; j++)
-                            if (matrix[i, j] < rows[i])
-                                rows[i] = matrix[i, j];
-                    }
+                case Choice.Min:
+                    rows = RowsMin(matrix);
                     break;
             }
 
             switch (orderOfSort)
             {
-                case "increasing":
+                case OrderOfSort.Increasing:
                     int a;
                     for (int i = 0; i < n; i++)
                         for (int j = 1; j < n; j++)
@@ -98,7 +134,7 @@ namespace Task_3
                                 index[j - 1] = a;
                             }
                     break;
-                case "decreasing":
+                case OrderOfSort.Decreasing:
                     for (int i = 0; i < n; i++)
                         for (int j = 1; j < n; j++)
                             if (rows[j] > rows[j - 1])
@@ -122,34 +158,23 @@ namespace Task_3
             return matrixOut;
         }
 
-        public void Test()
+        public void Test(int[,] matrix, Choice choice, OrderOfSort orderOfSort)
         {
-            int[,] matrix = new int[3, 3];
-            matrix[0, 0] = 3;
-            matrix[0, 1] = 3;
-            matrix[0, 2] = 3;
-            matrix[1, 0] = 2;
-            matrix[1, 1] = 2;
-            matrix[1, 2] = 2;
-            matrix[2, 0] = 1;
-            matrix[2, 1] = 1;
-            matrix[2, 2] = 1;
-
             Console.WriteLine("Matrix:");
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < matrix.GetLength(0); i++)
             {
-                for (int j = 0; j < 3; j++)
+                for (int j = 0; j < matrix.GetLength(1); j++)
                     Console.Write(matrix[i, j] + "   ");
 
                 Console.WriteLine();
             }
 
-            int[,] matrixOut = Sort(matrix, 3, 3, "sum", "increasing");
+            int[,] matrixOut = Sort(matrix, choice, orderOfSort);
 
             Console.WriteLine("Sorted matrix:");
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < matrix.GetLength(0); i++)
             {
-                for(int j = 0; j < 3; j++)
+                for(int j = 0; j < matrix.GetLength(1); j++)
                     Console.Write(matrixOut[i, j] + "   ");
 
                 Console.WriteLine();
@@ -162,9 +187,20 @@ namespace Task_3
         public static void Main(string[] args)
         {
             NthRoot nthRoot = new NthRoot(8.0, 0.01);
-            nthRoot.Test();
+            nthRoot.Test(8.0, 3);
+
             BubbleSort bubblesort = new BubbleSort();
-            bubblesort.Test();
+            int[,] matrix = new int[3, 3];
+            matrix[0, 0] = 3;
+            matrix[0, 1] = 3;
+            matrix[0, 2] = 3;
+            matrix[1, 0] = 2;
+            matrix[1, 1] = 2;
+            matrix[1, 2] = 2;
+            matrix[2, 0] = 1;
+            matrix[2, 1] = 1;
+            matrix[2, 2] = 1;
+            bubblesort.Test(matrix, Choice.Sum, OrderOfSort.Increasing);
         }
     }
 }
