@@ -37,8 +37,14 @@ namespace Task_3
             return x;
         }
 
-        public double NewtonMethod(double number, uint n)
+        public double? NewtonMethod(double number, uint n)
         {
+            if (n == 0)
+                return null;
+
+            if (number < 0 && n % 2 == 0)
+                return null;
+
             double x;
             double y = init;
             do
@@ -58,35 +64,43 @@ namespace Task_3
 
     public class BubbleSort
     {
-        private int[] RowsSum(int[,] matrix)
+        private void Swapping(int[] array, int j)
         {
-            int[] rows = new int[matrix.GetLength(0)];
-            for (int i = 0; i < matrix.GetLength(0); i++)
-                for (int j = 0; j < matrix.GetLength(1); j++)
+            int a;
+            a = array[j];
+            array[j] = array[j - 1];
+            array[j - 1] = a;
+        }
+
+        private int[] RowsSum(int[,] matrix, int n, int m)
+        {
+            int[] rows = new int[n];
+            for (int i = 0; i < n; i++)
+                for (int j = 0; j < m; j++)
                     rows[i] += matrix[i, j];
             return rows;
         }
 
-        private int[] RowsMax(int[,] matrix)
+        private int[] RowsMax(int[,] matrix, int n, int m)
         {
-            int[] rows = new int[matrix.GetLength(0)];
-            for (int i = 0; i < matrix.GetLength(0); i++)
+            int[] rows = new int[n];
+            for (int i = 0; i < n; i++)
             {
                 rows[i] = matrix[i, 0];
-                for (int j = 0; j < matrix.GetLength(1); j++)
+                for (int j = 0; j < m; j++)
                     if (matrix[i, j] > rows[i])
                         rows[i] = matrix[i, j];
             }
             return rows;
         }
 
-        private int[] RowsMin(int[,] matrix)
+        private int[] RowsMin(int[,] matrix, int n, int m)
         {
-            int[] rows = new int[matrix.GetLength(0)];
-            for (int i = 0; i < matrix.GetLength(0); i++)
+            int[] rows = new int[n];
+            for (int i = 0; i < n; i++)
             {
                 rows[i] = matrix[i, 0];
-                for (int j = 0; j < matrix.GetLength(1); j++)
+                for (int j = 0; j < m; j++)
                     if (matrix[i, j] > rows[i])
                         rows[i] = matrix[i, j];
             }
@@ -107,47 +121,37 @@ namespace Task_3
             switch(choice)
             {
                 case Choice.Sum:
-                    rows = RowsSum(matrix);
+                    rows = RowsSum(matrix, n, m);
                     break;
                 case Choice.Max:
-                    rows = RowsMax(matrix);
+                    rows = RowsMax(matrix, n, m);
                     break;
                 case Choice.Min:
-                    rows = RowsMin(matrix);
+                    rows = RowsMin(matrix, n, m);
                     break;
             }
 
-            switch (orderOfSort)
+            for (int i = 0; i < n; i++)
             {
-                case OrderOfSort.Increasing:
-                    int a;
-                    for (int i = 0; i < n; i++)
-                        for (int j = 1; j < n; j++)
-                            if (rows[j] < rows[j - 1])
-                            {
-                                a = rows[j];
-                                rows[j] = rows[j - 1];
-                                rows[j - 1] = a;
-
-                                a = index[j];
-                                index[j] = index[j - 1];
-                                index[j - 1] = a;
-                            }
-                    break;
-                case OrderOfSort.Decreasing:
-                    for (int i = 0; i < n; i++)
-                        for (int j = 1; j < n; j++)
-                            if (rows[j] > rows[j - 1])
-                            {
-                                a = rows[j];
-                                rows[j] = rows[j - 1];
-                                rows[j - 1] = a;
-
-                                a = index[j];
-                                index[j] = index[j - 1];
-                                index[j - 1] = a;
-                            }
-                    break;
+                for (int j = 1; j < n; j++)
+                {
+                    if (orderOfSort == OrderOfSort.Increasing)
+                    {
+                        if (rows[j] < rows[j - 1])
+                        {
+                            Swapping(rows, j);
+                            Swapping(index, j);
+                        }
+                    }
+                    else
+                    {
+                        if (rows[j] > rows[j - 1])
+                        {
+                            Swapping(rows, j);
+                            Swapping(index, j);
+                        }
+                    }
+                }
             }
 
             int[,] matrixOut = new int[n, m];
