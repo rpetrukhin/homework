@@ -6,28 +6,23 @@ using System.Threading.Tasks;
 
 namespace Task_2
 {
-    class Program1
+    public class Program1
     {
-        static int InsertBits(int x, int y, int i, int j)
+        public static int InsertBits(int x, int y, int i, int j)
         {
-            StringBuilder sbY = new StringBuilder();
+            StringBuilder sbY = new StringBuilder(j - i  + 1);
             for(int k = i - 1; k < j; k++)
                 sbY.Append(((y >> k) & 1));
 
-            int copyX = x;
-            int digitX = 1;
-            while (copyX / 2 > 0)
+            StringBuilder sbX = new StringBuilder();
+            while (x > 0)
             {
-                copyX /= 2;
-                digitX++;
+                sbX.Append(x % 2);
+                x /= 2;
             }
 
-            StringBuilder sbX = new StringBuilder();
-            for (int k = 0; k < digitX; k++)
-                sbX.Append(((x >> k) & 1));
-
-            string sY = sbY.ToString();
-            string sX = sbX.ToString().Insert(i - 1, sY);
+            sbX.Insert(i - 1, sbY);
+            string sX = sbX.ToString();
 
             char[] array = sX.ToCharArray();
             Array.Reverse(array);
@@ -36,20 +31,20 @@ namespace Task_2
             return Convert.ToInt32(s, 2);
         }
 
-        public static void Test()
+        public static void Test(int x, int y, int i, int j)
         {
-            Console.WriteLine(InsertBits(255, 140, 5, 7));
+            Console.WriteLine(InsertBits(x, y, i, j));
         }
     }
 
-    class Program2
+    public class Program2
     {
-        static int Max(int a, int b)
+        private static int Max(int a, int b)
         {
             return (a > b ? a : b);
         }
 
-        static int MaxOfArray(int[] array, int lengthOfArray)
+        public static int MaxOfArray(int[] array, int lengthOfArray)
         {
             if (lengthOfArray == 1)
                 return array[0];
@@ -59,23 +54,15 @@ namespace Task_2
                 return Max(array[lengthOfArray - 1], MaxOfArray(array, lengthOfArray - 1));
         }
 
-        public static void Test()
+        public static void Test(int[] array)
         {
-            int n = 10;
-            int[] array = new int[n];
-            Random rnd = new Random();
-            for (int i = 0; i < n; i++)
-            {
-                array[i] = rnd.Next(0,100);
-                Console.Write(array[i] + ", ");
-            }
             Console.WriteLine("\nMaximum = " + MaxOfArray(array, array.Length));
         }
     }
 
-    class Program3
+    public class Program3
     {
-        static int IndexOfEqualSums(int[] array)
+        public static int IndexOfEqualSums(int[] array)
         {
             if (array.Length < 3)
                 return -1;
@@ -98,23 +85,15 @@ namespace Task_2
             return -1;
         }
 
-        public static void Test()
+        public static void Test(int[] array)
         {
-            int n = 10;
-            int[] array = new int[n];
-            Random rnd = new Random();
-            for (int i = 0; i < n; i++)
-            {
-                array[i] = rnd.Next(0, 2);
-                Console.Write(array[i] + ", ");
-            }
             Console.WriteLine("\nIndex = " + IndexOfEqualSums(array));
         }
     }
 
-    class Program4
+    public class Program4
     {
-        static string AlphabetizedString(string s1, string s2)
+        public static string AlphabetizedString(string s1, string s2)
         {
             StringBuilder sb = new StringBuilder();
             string[] alphabet = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l",
@@ -127,15 +106,15 @@ namespace Task_2
             return sb.ToString();
         }
 
-        public static void Test()
+        public static void Test(string s1, string s2)
         {
-            Console.WriteLine(AlphabetizedString("hello", "world"));
+            Console.WriteLine(AlphabetizedString(s1, s2));
         }
     }
 
-    class Program5
+    public class Program5
     {
-        static string FilterLucky(params int[] array)
+        public static string FilterLucky(params int[] array)
         {
             StringBuilder sb = new StringBuilder();
             for(int i = 0; i < array.Length; i++)
@@ -146,21 +125,48 @@ namespace Task_2
             return sb.Remove(sb.Length - 2, 2).ToString();
         }
 
-        public static void Test()
+        public static void Test(params int[] array)
         {
-            Console.WriteLine(FilterLucky(1,4,7,13,71,106,701));
+            Console.WriteLine(FilterLucky(array));
         }
     }
 
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
-        {            
-            Program1.Test();
-            Program2.Test();
-            Program3.Test();
-            Program4.Test();
-            Program5.Test();
+        public static void Main(string[] args)
+        {
+            Console.WriteLine("Test 1");
+            Program1.Test(255, 140, 5, 7);
+            Console.WriteLine();
+
+            Console.WriteLine("Test 2");
+            int[] array2 = new int[10];
+            Random rnd2 = new Random();
+            for (int i = 0; i < 10; i++)
+            {
+                array2[i] = rnd2.Next(0, 100);
+                Console.Write(array2[i] + ", ");
+            }
+            Program2.Test(array2);
+            Console.WriteLine();
+
+            Console.WriteLine("Test 3");
+            int[] array3 = new int[10];
+            Random rnd3 = new Random();
+            for (int i = 0; i < 10; i++)
+            {
+                array3[i] = rnd3.Next(0, 2);
+                Console.Write(array3[i] + ", ");
+            }
+            Program3.Test(array3);
+            Console.WriteLine();
+
+            Console.WriteLine("Test 4");
+            Program4.Test("hello", "world");
+            Console.WriteLine();
+
+            Console.WriteLine("Test 5");
+            Program5.Test(1, 4, 7, 13, 71, 106, 701);
         }
     }
 }
