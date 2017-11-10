@@ -10,23 +10,6 @@ namespace Task_4
 {
     public static class DoubleExtension
     {
-        private static string ToBinInt(int x)
-        {
-            StringBuilder sb = new StringBuilder();
-
-            while (x > 0)
-            {
-                sb.Append(x % 2);
-                x /= 2;
-            }
-
-            char[] array = sb.ToString().ToCharArray();
-            Array.Reverse(array);
-            string s = new string(array);
-
-            return s;
-        }
-
         private static string ToBinFrac(double x, int len)
         {
             StringBuilder sb = new StringBuilder();
@@ -57,10 +40,10 @@ namespace Task_4
             int intOfDouble = (int)Math.Truncate(Math.Abs(value));
             double fracOfDouble = Math.Abs(value) - intOfDouble;
 
-            string intOfDoubleBin = ToBinInt(intOfDouble);
+            string intOfDoubleBin = Convert.ToString(intOfDouble, 2);
             string fracOfDoubleBin = ToBinFrac(fracOfDouble, mantissaSize - intOfDoubleBin.Length + 1);
 
-            string order = ToBinInt(intOfDoubleBin.Length - 1 + shift);
+            string order = Convert.ToString(intOfDoubleBin.Length - 1 + shift, 2);
             string zeros = new string('0', orderSize - order.Length);
             string order11Bits = zeros + order;
 
@@ -72,7 +55,7 @@ namespace Task_4
 
         public static void Test(double value)
         {
-            Console.WriteLine("Binary representation of double: " + value.ToBinary());
+            Console.WriteLine("Binary representation of double: {0}", value.ToBinary());
         }
     }
 
@@ -90,7 +73,7 @@ namespace Task_4
             return a;
         }
 
-        public Tuple<int, long> EuclideanAlgorithm(params int[] numbers)
+        public Tuple<int, double> EuclideanAlgorithm(params int[] numbers)
         {
             Stopwatch time = new Stopwatch();
             time.Start();
@@ -98,7 +81,7 @@ namespace Task_4
             if (numbers.Length < 2)
             {
                 time.Stop();
-                return Tuple.Create(-1, time.ElapsedMilliseconds);
+                return Tuple.Create(-1, time.Elapsed.TotalMilliseconds);
             }
 
             int d = EuclideanAlgorithm(numbers[0], numbers[1]);
@@ -108,7 +91,7 @@ namespace Task_4
             }
 
             time.Stop();
-            return Tuple.Create(Math.Abs(d), time.ElapsedMilliseconds);
+            return Tuple.Create(Math.Abs(d), time.Elapsed.TotalMilliseconds);
         }
 
         private int SteinAlgorithm(int a, int b)
@@ -142,7 +125,7 @@ namespace Task_4
         }
 
         //The third possibility to return more than one value from the method is to use the <<ref>> instead of the <<out>>
-        public int SteinAlgorithm(out long time, params int[] numbers)
+        public int SteinAlgorithm(out double time, params int[] numbers)
         {
             Stopwatch timeElapsed = new Stopwatch();
             timeElapsed.Start();
@@ -150,7 +133,7 @@ namespace Task_4
             if (numbers.Length < 2)
             {
                 timeElapsed.Stop();
-                time = timeElapsed.ElapsedMilliseconds;
+                time = timeElapsed.Elapsed.TotalMilliseconds;
                 return -1;
             }
 
@@ -161,20 +144,20 @@ namespace Task_4
             }
 
             timeElapsed.Stop();
-            time = timeElapsed.ElapsedMilliseconds;
+            time = timeElapsed.Elapsed.TotalMilliseconds;
             return Math.Abs(d);
         }
 
         public void Test(params int[] numbers)
         {
-            var gcd = Tuple.Create(0, (long)0);
+            var gcd = Tuple.Create(0, (double)0);
             gcd = EuclideanAlgorithm(numbers);
-            Console.WriteLine("GCD of input numbers by Euclidean algorithm = " +
-                gcd.Item1 + ", time = " + gcd.Item2);
+            Console.WriteLine("GCD of input numbers by Euclidean algorithm = {0}, time = {1}",
+                gcd.Item1, gcd.Item2);
 
-            long time = 0;
-            Console.WriteLine("GCD of input numbers by Stein algorithm = " + 
-                SteinAlgorithm(out time, numbers) + ", time = " + time);
+            double time;
+            Console.WriteLine("GCD of input numbers by Stein algorithm = {0}, time = {1}", 
+                SteinAlgorithm(out time, numbers), time);
         }
     }
 
@@ -182,12 +165,12 @@ namespace Task_4
     {
         public static string SayHello(this string name)
         {
-            return "Hello, " + name + "!";
+            return String.Format("Hello, {0}!", name);
         }
 
         public static string SayGoodbye(this string name)
         {
-            return "Goodbye, " + name + ". See you again soon!";
+            return String.Format("Goodbye, {0}. See you again soon!", name);
         }
 
         public static void Test(string name)
