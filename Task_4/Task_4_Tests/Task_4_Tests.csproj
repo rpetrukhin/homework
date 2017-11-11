@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{75831A02-87E0-449B-91F8-63F6B8AC7CCC}</ProjectGuid>
+    <ProjectGuid>{773BAB5E-BCFC-47DB-85D5-7C9607FDAB1D}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Task_4</RootNamespace>
-    <AssemblyName>Task_4</AssemblyName>
+    <RootNamespace>Task_4_Tests</RootNamespace>
+    <AssemblyName>Task_4_Tests</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -51,6 +51,15 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Task_4\Task_4.csproj">
+      <Project>{75831a02-87e0-449b-91f8-63f6b8ac7ccc}</Project>
+      <Name>Task_4</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
