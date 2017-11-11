@@ -21,13 +21,13 @@ namespace Task_3
 
     public class NthRoot
     {
-        private double init;
-        private double eps;
+        private double _init;
+        private double _eps;
 
         public NthRoot(double init, double eps)
         {
-            this.init = init;
-            this.eps = eps;
+            _init = init;
+            _eps = eps;
         }
 
         private double Pow(double x, uint n)
@@ -46,19 +46,13 @@ namespace Task_3
                 return null;
 
             double x;
-            double y = init;
+            double y = _init;
             do
             {
                 x = y;
                 y = 1.0 / n * ((n - 1) * x + number / Pow(x, n - 1));
-            } while (Math.Abs(x - y) > eps);
+            } while (Math.Abs(x - y) > _eps);
             return y;
-        }
-
-        public void Test(double number, uint n)
-        {
-            Console.WriteLine("Newton's method = " + NewtonMethod(number, n));
-            Console.WriteLine("Math.Pow method = " + Math.Pow(number, 1.0 / n));
         }
     }
 
@@ -161,50 +155,12 @@ namespace Task_3
 
             return matrixOut;
         }
-
-        public void Test(int[,] matrix, Choice choice, OrderOfSort orderOfSort)
-        {
-            Console.WriteLine("Matrix:");
-            for (int i = 0; i < matrix.GetLength(0); i++)
-            {
-                for (int j = 0; j < matrix.GetLength(1); j++)
-                    Console.Write(matrix[i, j] + "   ");
-
-                Console.WriteLine();
-            }
-
-            int[,] matrixOut = Sort(matrix, choice, orderOfSort);
-
-            Console.WriteLine("Sorted matrix:");
-            for (int i = 0; i < matrix.GetLength(0); i++)
-            {
-                for(int j = 0; j < matrix.GetLength(1); j++)
-                    Console.Write(matrixOut[i, j] + "   ");
-
-                Console.WriteLine();
-            }
-        }
     }
 
     public class Program
     {
         public static void Main(string[] args)
         {
-            NthRoot nthRoot = new NthRoot(8.0, 0.01);
-            nthRoot.Test(8.0, 3);
-
-            BubbleSort bubblesort = new BubbleSort();
-            int[,] matrix = new int[3, 3];
-            matrix[0, 0] = 3;
-            matrix[0, 1] = 3;
-            matrix[0, 2] = 3;
-            matrix[1, 0] = 2;
-            matrix[1, 1] = 2;
-            matrix[1, 2] = 2;
-            matrix[2, 0] = 1;
-            matrix[2, 1] = 1;
-            matrix[2, 2] = 1;
-            bubblesort.Test(matrix, Choice.Sum, OrderOfSort.Increasing);
         }
     }
 }

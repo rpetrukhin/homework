@@ -52,11 +52,6 @@ namespace Task_4
             string strBin = sign + order11Bits + intOfDoubleBin.Substring(1, intOfDoubleBin.Length - 1) + fracOfDoubleBin;
             return strBin;
         }
-
-        public static void Test(double value)
-        {
-            Console.WriteLine("Binary representation of double: {0}", value.ToBinary());
-        }
     }
 
     public class GCD
@@ -147,18 +142,6 @@ namespace Task_4
             time = timeElapsed.Elapsed.TotalMilliseconds;
             return Math.Abs(d);
         }
-
-        public void Test(params int[] numbers)
-        {
-            var gcd = Tuple.Create(0, (double)0);
-            gcd = EuclideanAlgorithm(numbers);
-            Console.WriteLine("GCD of input numbers by Euclidean algorithm = {0}, time = {1}",
-                gcd.Item1, gcd.Item2);
-
-            double time;
-            Console.WriteLine("GCD of input numbers by Stein algorithm = {0}, time = {1}", 
-                SteinAlgorithm(out time, numbers), time);
-        }
     }
 
     public static class StringExtension
@@ -172,28 +155,12 @@ namespace Task_4
         {
             return String.Format("Goodbye, {0}. See you again soon!", name);
         }
-
-        public static void Test(string name)
-        {
-            Console.WriteLine(name.SayHello());
-            Console.WriteLine(name.SayGoodbye());
-        }
     }
 
     public class Program
     {
         public static void Main(string[] args)
         {
-            //There is an example at the bottom of the page
-            //https://neerc.ifmo.ru/wiki/index.php?title=Представление_вещественных_чисел 
-            DoubleExtension.Test(-312.3125);
-            Console.WriteLine();
-
-            GCD gcd = new GCD();
-            gcd.Test(78, 294, 570, 36);
-            Console.WriteLine();
-
-            StringExtension.Test("Kathy");
         }
     }
 }
