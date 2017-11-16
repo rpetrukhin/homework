@@ -31,6 +31,12 @@ namespace Task_6
 
         public static bool operator ==(Polynomial polynomFirst, Polynomial polynomSecond)
         {
+            if (ReferenceEquals(polynomFirst, polynomSecond))
+                return true;
+
+            if (((object)polynomFirst == null) || ((object)polynomSecond == null))
+                return false;
+
             if (polynomFirst._coeff.Length != polynomSecond._coeff.Length)
                 return false;
 
@@ -48,6 +54,9 @@ namespace Task_6
 
         public static Polynomial operator +(Polynomial polynomFirst, Polynomial polynomSecond)
         {
+            if (polynomFirst == null || polynomSecond == null)
+                throw new ArgumentNullException();
+
             if (polynomFirst._coeff.Length > polynomSecond._coeff.Length)
             {
                 var polynom = new Polynomial(polynomFirst._coeff);
@@ -68,6 +77,9 @@ namespace Task_6
 
         public static Polynomial operator -(Polynomial polynomFirst, Polynomial polynomSecond)
         {
+            if (polynomFirst == null || polynomSecond == null)
+                throw new ArgumentNullException();
+
             if (polynomFirst._coeff.Length > polynomSecond._coeff.Length)
             {
                 var polynom = new Polynomial(polynomFirst._coeff);
@@ -92,6 +104,9 @@ namespace Task_6
 
         public static Polynomial operator *(Polynomial polynomFirst, Polynomial polynomSecond)
         {
+            if (polynomFirst == null || polynomSecond == null)
+                throw new ArgumentNullException();
+
             int[] coeff = new int[polynomFirst._coeff.Length + polynomSecond._coeff.Length - 1];
             coeff[0] = 1;
             var polynom = new Polynomial(coeff);
