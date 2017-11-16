@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{30ACFF72-CC2C-4DAF-AA40-2C9601EEB079}</ProjectGuid>
+    <ProjectGuid>{FE3A55F3-292D-44ED-8968-82359F36973A}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>Task_6_Tests</RootNamespace>
     <AssemblyName>Task_6_Tests</AssemblyName>
@@ -56,7 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Task_6\Task_6.csproj">
-      <Project>{dcdb41f6-50c4-4c13-acf2-5852e98d0f36}</Project>
+      <Project>{38d8afe3-cb42-4404-9c80-d7bcaa8bbb6e}</Project>
       <Name>Task_6</Name>
     </ProjectReference>
   </ItemGroup>

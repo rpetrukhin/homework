@@ -14,19 +14,18 @@ namespace Task_6
 
     public abstract class Figure
     {
-        protected Point[] points;
         public abstract double Area();
         public abstract double Perimeter();
     }
 
     public class Circle : Figure
     {
+        private Point _center;
         private double _radius;
 
         public Circle(Point center, double radius)
         {
-            points = new Point[1];
-            points[0] = center;
+            _center = center;
             _radius = radius;
         }
 
@@ -43,12 +42,14 @@ namespace Task_6
 
     public class Triangle : Figure
     {
-        public Triangle(Point[] points)
+        private Point[] _points;
+
+        public Triangle(Point p0, Point p1, Point p2)
         {
-            if (points.Length == 3)
-                this.points = points;
-            else
-                throw new Exception("It's not a triangle");
+            _points = new Point[3];
+            _points[0] = p0;
+            _points[1] = p1;
+            _points[2] = p2;
         }
 
         public override double Area()
@@ -67,16 +68,13 @@ namespace Task_6
         protected double a;
         protected double b;
 
-        public Rectangle(Point[] points)
+        //p0 - upper left point
+        //p1 - upper right point
+        //p2 - lower right point
+        public Rectangle(Point p0, Point p1, Point p2)
         {
-            if (points.Length == 4)
-            {
-                this.points = points;
-                a = points[1].x - points[0].x;
-                b = points[2].y - points[1].y;
-            }
-            else
-                throw new Exception("It's not a rectangle");
+            a = p1.x - p0.x;
+            b = p1.y - p2.y;
         }
 
         public override double Area()
@@ -94,7 +92,10 @@ namespace Task_6
     {
         private double _c;
 
-        public Square(Point[] points) : base(points)
+        //p0 - upper left point
+        //p1 - upper right point
+        //p2 - lower right point
+        public Square(Point p0, Point p1, Point p2) : base(p0 , p1, p2)
         {
             if (a == b)
             {
