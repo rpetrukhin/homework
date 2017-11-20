@@ -26,7 +26,10 @@ namespace Task_7
 
         public string ToString(string format)
         {
-            switch(format.ToLower())
+            if (format == null)
+                return String.Format("{0}, {1}, {2}", _name, _contactPhone, _revenue);
+
+            switch (format.ToLower())
             {
                 case "n":
                     return _name;
@@ -52,18 +55,21 @@ namespace Task_7
     {
         public string ConvertIntoTitleCase(string phrase, string listOfMinorWords = "")
         {
+            if (phrase == null)
+                return "";
+
+            if (listOfMinorWords == null)
+                listOfMinorWords = "";
+
             phrase = phrase.ToLower();
 
             string[] wordsOfPhrase = phrase.Split();
-            string[] minorWords = listOfMinorWords.Split();
 
-            for (int i = 0; i < wordsOfPhrase.Length; i++)
-                wordsOfPhrase[i] = String.Concat(Char.ToUpper(wordsOfPhrase[i][0]), wordsOfPhrase[i].Substring(1));
+            wordsOfPhrase[0] = String.Concat(Char.ToUpper(wordsOfPhrase[0][0]), wordsOfPhrase[0].Substring(1));
 
             for (int i = 1; i < wordsOfPhrase.Length; i++)
-                for (int j = 0; j < minorWords.Length; j++)
-                    if (String.Equals(wordsOfPhrase[i], minorWords[j], StringComparison.OrdinalIgnoreCase))
-                        wordsOfPhrase[i] = wordsOfPhrase[i].ToLower();
+                if (listOfMinorWords.IndexOf(wordsOfPhrase[i], StringComparison.OrdinalIgnoreCase) == -1)
+                    wordsOfPhrase[i] = String.Concat(Char.ToUpper(wordsOfPhrase[i][0]), wordsOfPhrase[i].Substring(1));
 
             string phraseOut = String.Join(" ", wordsOfPhrase);
 
@@ -75,6 +81,9 @@ namespace Task_7
     {
         public string AddOrChangeUrlParameter(string url, string keyValueParameter)
         {
+            if (keyValueParameter == null)
+                return url;
+
             var st = new StringBuilder();
             st.Append(url);
 
@@ -105,13 +114,16 @@ namespace Task_7
 
     public class UniqueSymbol
     {
-        public string UniqueInOrder(IEnumerable<char> sequence) 
+        public string UniqueInOrder(IEnumerable<char> sequence)
         {
-            var sb = new StringBuilder();
-            foreach(char symbol in sequence)
-            {
-                sb.Append(symbol);
-            }
+            var str = string.Join("", sequence);
+
+            return UniqueInOrder(str);
+        }
+
+        public string UniqueInOrder(string sequence)
+        {
+            var sb = new StringBuilder(sequence);
 
             int i = 1;
             while (i < sb.Length)
@@ -132,6 +144,9 @@ namespace Task_7
     {
         public string ReverseWords(string phrase)
         {
+            if (phrase == null)
+                return "";
+
             string[] s = phrase.Split();
 
             Array.Reverse(s);
