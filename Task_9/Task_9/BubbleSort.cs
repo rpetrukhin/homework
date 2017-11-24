@@ -22,17 +22,14 @@ namespace Task_9
             array[j - 1] = a;
         }
 
-        public int[] RowsSum(int[,] matrix, int n, int m)
+        public int[] RowsSum(int[,] matrix)
         {
             if (matrix == null)
                 return new int[1] { 0 };
 
-            if (n != matrix.GetLength(0) || m != matrix.GetLength(1))
-            {
-                n = matrix.GetLength(0);
-                m = matrix.GetLength(1);
-            }
-            
+            int n = matrix.GetLength(0);
+            int m = matrix.GetLength(1);
+
             int[] rows = new int[n];
             for (int i = 0; i < n; i++)
                 for (int j = 0; j < m; j++)
@@ -40,16 +37,13 @@ namespace Task_9
             return rows;
         }
 
-        public int[] RowsMax(int[,] matrix, int n, int m)
+        public int[] RowsMax(int[,] matrix)
         {
             if (matrix == null)
                 return new int[1] { 0 };
 
-            if (n != matrix.GetLength(0) || m != matrix.GetLength(1))
-            {
-                n = matrix.GetLength(0);
-                m = matrix.GetLength(1);
-            }
+            int n = matrix.GetLength(0);
+            int m = matrix.GetLength(1);
 
             int[] rows = new int[n];
             for (int i = 0; i < n; i++)
@@ -62,16 +56,13 @@ namespace Task_9
             return rows;
         }
 
-        public int[] RowsMin(int[,] matrix, int n, int m)
+        public int[] RowsMin(int[,] matrix)
         {
             if (matrix == null)
                 return new int[1] { 0 };
 
-            if (n != matrix.GetLength(0) || m != matrix.GetLength(1))
-            {
-                n = matrix.GetLength(0);
-                m = matrix.GetLength(1);
-            }
+            int n = matrix.GetLength(0);
+            int m = matrix.GetLength(1);
 
             int[] rows = new int[n];
             for (int i = 0; i < n; i++)
@@ -90,7 +81,7 @@ namespace Task_9
                 return;
 
             if (rows.Length != index.Length)
-                return;
+                throw new Exception("Rows length doesn't equal index length");
 
             for (int i = 0; i < rows.Length; i++)
                 for (int j = 1; j < rows.Length; j++)
@@ -107,7 +98,7 @@ namespace Task_9
                 return;
 
             if (rows.Length != index.Length)
-                return;
+                throw new Exception("Rows length doesn't equal index length");
 
             for (int i = 0; i < rows.Length; i++)
                 for (int j = 1; j < rows.Length; j++)
@@ -118,7 +109,7 @@ namespace Task_9
                     }
         }
 
-        public delegate int[] StrategyOfSort(int[,] matrix, int n, int m);
+        public delegate int[] StrategyOfSort(int[,] matrix);
 
         public delegate void OrderOfSort(int[] rows, int[] index);
 
@@ -136,7 +127,7 @@ namespace Task_9
             for (int i = 0; i < n; i++)
                 index[i] = i;
 
-            rows = strategyOfSort(matrix, n, m);
+            rows = strategyOfSort(matrix);
 
             orderOfSort(rows, index);
 
