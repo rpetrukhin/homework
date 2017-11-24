@@ -10,6 +10,12 @@ namespace Task_9
     {
         private void Swapping(int[] array, int j)
         {
+            if (array == null)
+                return;
+
+            if (j >= array.Length || j < 0)
+                return;
+
             int a;
             a = array[j];
             array[j] = array[j - 1];
@@ -18,6 +24,15 @@ namespace Task_9
 
         public int[] RowsSum(int[,] matrix, int n, int m)
         {
+            if (matrix == null)
+                return new int[1] { 0 };
+
+            if (n != matrix.GetLength(0) || m != matrix.GetLength(1))
+            {
+                n = matrix.GetLength(0);
+                m = matrix.GetLength(1);
+            }
+            
             int[] rows = new int[n];
             for (int i = 0; i < n; i++)
                 for (int j = 0; j < m; j++)
@@ -27,6 +42,15 @@ namespace Task_9
 
         public int[] RowsMax(int[,] matrix, int n, int m)
         {
+            if (matrix == null)
+                return new int[1] { 0 };
+
+            if (n != matrix.GetLength(0) || m != matrix.GetLength(1))
+            {
+                n = matrix.GetLength(0);
+                m = matrix.GetLength(1);
+            }
+
             int[] rows = new int[n];
             for (int i = 0; i < n; i++)
             {
@@ -40,6 +64,15 @@ namespace Task_9
 
         public int[] RowsMin(int[,] matrix, int n, int m)
         {
+            if (matrix == null)
+                return new int[1] { 0 };
+
+            if (n != matrix.GetLength(0) || m != matrix.GetLength(1))
+            {
+                n = matrix.GetLength(0);
+                m = matrix.GetLength(1);
+            }
+
             int[] rows = new int[n];
             for (int i = 0; i < n; i++)
             {
@@ -53,6 +86,12 @@ namespace Task_9
 
         public void SortRowsInAscending(int[] rows, int[] index)
         {
+            if (rows == null || index == null)
+                return;
+
+            if (rows.Length != index.Length)
+                return;
+
             for (int i = 0; i < rows.Length; i++)
                 for (int j = 1; j < rows.Length; j++)
                     if (rows[j] < rows[j - 1])
@@ -64,6 +103,12 @@ namespace Task_9
 
         public void SortRowsInDescending(int[] rows, int[] index)
         {
+            if (rows == null || index == null)
+                return;
+
+            if (rows.Length != index.Length)
+                return;
+
             for (int i = 0; i < rows.Length; i++)
                 for (int j = 1; j < rows.Length; j++)
                     if (rows[j] > rows[j - 1])
@@ -79,6 +124,9 @@ namespace Task_9
 
         public int[,] Sort(int[,] matrix, StrategyOfSort strategyOfSort, OrderOfSort orderOfSort)
         {
+            if (matrix == null || strategyOfSort == null || orderOfSort == null)
+                return matrix;
+
             int n = matrix.GetLength(0);
             int m = matrix.GetLength(1);
 

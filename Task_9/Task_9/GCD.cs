@@ -58,7 +58,7 @@ namespace Task_9
             Stopwatch time = new Stopwatch();
             time.Start();
 
-            if (numbers.Length < 2)
+            if (numbers.Length < 2 || algorithmType == null)
             {
                 time.Stop();
                 return Tuple.Create(-1, time.Elapsed.TotalMilliseconds);
