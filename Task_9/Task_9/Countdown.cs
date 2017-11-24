@@ -39,17 +39,26 @@ namespace Task_9
     {
         public void Subscribe(Countdown countdown)
         {
+            if (countdown == null)
+                return;
+
             countdown.TimerEnds += PrintMessage;
         }
 
         public void Unsubscribe(Countdown countdown)
         {
+            if (countdown == null)
+                return;
+
             countdown.TimerEnds -= PrintMessage;
         }
 
         private void PrintMessage(TimerEndsEventArgs e)
         {
-            Console.WriteLine("Subscriber1 get message: "+ e.Message);
+            if (e == null)
+                Console.WriteLine("Subscriber1 get empty message");
+            else
+                Console.WriteLine("Subscriber1 get message: "+ e.Message);
         }
     }
 
@@ -57,17 +66,26 @@ namespace Task_9
     {
         public void Subscribe(Countdown countdown)
         {
+            if (countdown == null)
+                return;
+
             countdown.TimerEnds += PrintMessage;
         }
 
         public void Unsubscribe(Countdown countdown)
         {
+            if (countdown == null)
+                return;
+
             countdown.TimerEnds -= PrintMessage;
         }
 
         private void PrintMessage(TimerEndsEventArgs e)
         {
-            Console.WriteLine("Subscriber2 get message: " + e.Message);
+            if (e == null)
+                Console.WriteLine("Subscriber2 get empty message");
+            else
+                Console.WriteLine("Subscriber2 get message: " + e.Message);
         }
     }
 
