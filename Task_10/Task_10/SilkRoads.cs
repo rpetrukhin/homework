@@ -18,6 +18,9 @@ namespace Task_10
                 sb.Append(sr.ReadToEnd());
             }
 
+            if (sb.Capacity == 0)
+                return null;
+
             sb.Replace(',', ' ');
             sb.Replace('.', ' ');
             sb.Replace(':', ' ');

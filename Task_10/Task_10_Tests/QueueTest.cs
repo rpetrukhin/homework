@@ -24,7 +24,7 @@ namespace Task_10_Tests
         }
 
         [Test]
-        public void GetValues_Test()
+        public void GetEnumerator_Test()
         {
             var queue = new Task_10.Queue<int>();
 
@@ -36,51 +36,9 @@ namespace Task_10_Tests
                 queue.Enqueue(i * 10);
 
             int j = 0;
-            foreach(int value in queue.GetValues())
+            foreach(var elem in queue)
             {
-                array[j] = value;
-                j++;
-            }
-
-            Assert.That(array, Is.EqualTo(arrayExpected));
-        }
-
-        public IEnumerable<int> MyGetValues(Task_10.Queue<int> queue)
-        {
-            if (queue.Head == null)
-                yield break;
-
-            var list = new List<int>();
-
-            foreach (int number in queue.GetValues())
-            {
-                list.Add(number);
-            }
-
-            list.Reverse();
-
-            foreach (int number in list)
-            {
-                yield return number;
-            }
-        }
-
-        [Test]
-        public void MyGetValues_Test()
-        {
-            var queue = new Task_10.Queue<int>();
-
-            int[] arrayExpected = new int[10] { 90, 80, 70, 60, 50, 40, 30, 20, 10, 0 };
-
-            int[] array = new int[10];
-
-            for (int i = 0; i < 10; i++)
-                queue.Enqueue(i * 10);
-
-            int j = 0;
-            foreach (int value in MyGetValues(queue))
-            {
-                array[j] = value;
+                array[j] = elem.Value;
                 j++;
             }
 
