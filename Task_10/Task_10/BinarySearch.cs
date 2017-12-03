@@ -10,7 +10,7 @@ namespace Task_10
     {
         public int BinarySearchMethod<T>(T[] array, T x) where T : IComparable
         {
-            if (array == null)
+            if (array == null || x == null)
                 return -1;
 
             Array.Sort(array);

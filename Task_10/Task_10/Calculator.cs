@@ -10,7 +10,7 @@ namespace Task_10
     {
         public double Calculate(string expression)
         {
-            if (expression == null || expression == "")
+            if (string.IsNullOrWhiteSpace(expression))
                 return 0;
 
             string[] terms = expression.Split();

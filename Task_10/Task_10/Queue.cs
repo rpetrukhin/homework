@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,7 +23,51 @@ namespace Task_10
         }
     }
 
-    public class Queue<T>
+    public class QueueIterator<T> : IEnumerator<Node<T>>
+    {
+        private Node<T> _head;
+
+        public Node<T> Current { get; private set; }
+
+        object IEnumerator.Current => Current;
+
+        public QueueIterator(Queue<T> collection)
+        {
+            _head = collection.Head;
+            Current = null;
+        }
+
+        public void Dispose()
+        {
+        }
+
+        public bool MoveNext()
+        {
+            if (_head == null)
+                return false;
+
+            if (Current == null)
+            {
+                Current = _head;
+                return true;
+            }
+
+            if (Current.Next == null)
+                return false;
+            else
+            {
+                Current = Current.Next;
+                return true;
+            }
+        }
+
+        public void Reset()
+        {
+            Current = null;
+        }
+    }
+
+    public class Queue<T> : IEnumerable<Node<T>>
     {
         private Node<T> _head;
         private Node<T> _tail;
@@ -65,18 +110,14 @@ namespace Task_10
             return value;
         }
 
-        public IEnumerable<T> GetValues()
+        public IEnumerator<Node<T>> GetEnumerator()
         {
-            if (_head == null)
-                yield break;
+            return new QueueIterator<T>(this);
+        }
 
-            var current = _head;
-            while (current.Next != null)
-            {
-                yield return current.Value;
-                current = current.Next;
-            }
-            yield return current.Value;
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

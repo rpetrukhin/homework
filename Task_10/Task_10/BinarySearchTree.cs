@@ -102,6 +102,9 @@ namespace Task_10
 
         public Leaf<T> Search(Leaf<T> root, T key)
         {
+            if (key == null)
+                return null;
+
             if (root == null || key.CompareTo(root.Key) == 0)
                 return root;
             else if (key.CompareTo(root.Key) == -1)
