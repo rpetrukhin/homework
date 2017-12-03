@@ -31,9 +31,9 @@ namespace Task_11
 
     public class StudentFilter
     {
-        public List<Student> Filter(string consoleString)
+        public IReadOnlyCollection<Student> Filter(string consoleString)
         {
-            if (consoleString == null || consoleString == "")
+            if (string.IsNullOrWhiteSpace(consoleString))
                 return new List<Student>();
 
             string fileName = consoleString.Split()[0];
@@ -51,7 +51,7 @@ namespace Task_11
 
         private Dictionary<string, string> ParseFilters(string stringOfFilters)
         {
-            if (stringOfFilters == null || stringOfFilters == "")
+            if (string.IsNullOrWhiteSpace(stringOfFilters))
                 return null;
 
             var dict = new Dictionary<string, string>();
@@ -69,7 +69,7 @@ namespace Task_11
 
         private List<Student> ReadFile(string fileName)
         {
-            if (fileName == null || fileName == "")
+            if (string.IsNullOrWhiteSpace(fileName))
                 return null;
 
             var students = new List<Student>();
