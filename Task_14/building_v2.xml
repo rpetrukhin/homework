@@ -1,0 +1,14 @@
+<building>
+  <floor number="1">
+    <flats>
+      <flat number="1" />
+      <flat number="2" />
+    </flats>
+  </floor>
+  <floor number="2">
+    <flats>
+      <flat number="3" />
+      <flat number="4" />
+    </flats>
+  </floor>
+</building>
